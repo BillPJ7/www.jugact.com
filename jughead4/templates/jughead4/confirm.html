@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>50/50</title>
+        <link rel="stylesheet" href="{% static 'css/jughead4.css' %}">
+    </head>
+<body>
+    <h1>Enjoy the act!</h1>
+    <table>
+      <tr> 
+        <th>Routine</th> 
+        <th>Drops</th> 
+      </tr>
+    {% for p in my_post %}
+      <tr> 
+        <td>3 balls + can</td> 
+        <td>
+          {{ p.R1 }}
+        </td> 
+      </tr> 
+      <tr> 
+        <td>3 balls</td> 
+        <td>
+          {{ p.R2 }}
+        </td> 
+      </tr> 
+      <tr> 
+        <td>3 balls + club</td> 
+        <td>
+          {{ p.R3 }}
+        </td> 
+      </tr> 
+       
+      <tr>  
+      <td>
+      <p></p>
+        <a href="{% url 'jughead4:result' p.id %}">Results</a>
+      </td>
+      </tr>
+    {% endfor %}
+    </table>
+    <p></p>
+</body>
+</html>
+

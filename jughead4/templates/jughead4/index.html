@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>50/50</title>
+        <link rel="stylesheet" href="{% static 'css/jughead4.css' %}">
+    </head>
+<body>
+<form action="{% url 'jughead4:index' %}" method="post">
+{% csrf_token %}
+
+    <h1>50/50</h1>
+    <table>
+
+      <tr> 
+        <th>Routine</th> 
+        <th>Drops</th> 
+      </tr> 
+      <tr> 
+        <td>3 balls + can</td> 
+        
+        <td>
+          <input type="number" id="R1" name="R1" min="0" max="5" value="0">
+        </td> 
+      </tr> 
+      <tr> 
+        <td>3 balls</td> 
+        <td>
+          <input type="number" id="R2" name="R2" min="0" max="5" value="0">
+        </td> 
+      </tr> 
+      <tr> 
+        <td>3 balls + club</td> 
+        <td>
+          <input type="number" id="R3" name="R3" min="0" max="5" value="0">
+        </td> 
+      </tr> 
+    </table>
+    <p></p>
+    Name:<input type="text" id="Name" name="Name">
+    <input type="submit" value="Submit">
+
+</form> 
+</body>
+</html>

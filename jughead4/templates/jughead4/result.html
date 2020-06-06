@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>50/50</title>
+        <link rel="stylesheet" href="{% static 'css/jughead4.css' %}">
+    </head>
+<body>
+{% for wp in win_post %}
+<h1>Winner: {{ wp.name }} </h1>
+    <table>
+      <tr> 
+        <th>Routine</th> 
+        <th>Winner</th> 
+        <th>You</th> 
+        <th>Actual</th> 
+      </tr>
+    {% for mp in my_post %}
+    
+    {% for pa in post_actual %}
+      <tr> 
+        <td>3 balls + can</td> 
+        <td>
+          {{ wp.R1 }}
+        </td>
+        <td>
+          {{ mp.R1 }}
+        </td> 
+        <td>
+          {{ pa.R1 }}
+        </td>
+      </tr> 
+      <tr> 
+        <td>3 balls</td> 
+        <td>
+          {{ wp.R2 }}
+        </td>
+        <td>
+          {{ mp.R2 }}
+        </td> 
+        <td>
+          {{ pa.R2 }}
+        </td>
+      </tr> 
+      <tr> 
+        <td>3 balls + club</td> 
+        <td>
+          {{ wp.R3 }}
+        </td>
+        <td>
+          {{ mp.R3 }}
+        </td>
+        <td>
+          {{ pa.R3 }}
+        </td>
+      </tr> 
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+    </table>
+

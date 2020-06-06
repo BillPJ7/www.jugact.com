@@ -1,0 +1,60 @@
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from .models import Post
+
+def index(request):
+    #foo_instance = Foo.objects.create(name='test')
+   #return render(request, 'some_name.html.html')
+    if request.method == "POST":
+        post_instance = Post.objects.create(name = request.POST['Name'], 
+        R1 = request.POST['R1'], R2 = request.POST['R2'], 
+        R3 = request.POST['R3'])
+        my_post = Post.objects.filter(pk=post_instance.pk)
+        context = {'my_post': my_post}
+        return render(request, 'jughead4/confirm.html', context)
+        #my_post = get_object_or_404(Post, pk=post_instance.pk)
+       # post_instance = get_object_or_404(Post, pk=post_instance.pk)
+        #return render(request, 'jughead4/confirm.html', {'post_instance': post_instance})
+    else:
+        return render(request, 'jughead4/index.html')
+    
+def result(request, post_id):
+    #if request.method == "POST":
+        post_actual = Post.objects.filter(name='xyzgo')
+        if post_actual:
+            
+            my_post = Post.objects.filter(pk=post_id)
+            win_post = winner(post_actual)
+           # win_post = Post.objects.filter(pk=i)
+           # return render(request, 'jughead4/result.html', {'my_post': my_post, 'post_actual': post_actual})
+            context = {'my_post': my_post, 'win_post': win_post, 'post_actual': post_actual}
+            return render(request, 'jughead4/result.html', context)
+            #find winner display results
+        else:
+            my_post = Post.objects.filter(pk=post_id)
+            context = {'my_post': my_post}
+            return render(request, 'jughead4/confirm.html', context)
+            #post_instance = get_object_or_404(Post, pk=post_id)
+            #post_instance = Post.objects.filter(id=44)
+            #return HttpResponseRedirect(reverse('jughead4:confirm'))
+            #return render(request, 'jughead4/confirm.html', {'post_instance': post_instance})
+        #context = {'post_actual': post_actual}
+        #return render(request, 'jughead4/')
+    #else:
+        #return render(request, 'jughead4/result.html')
+def winner(post_actual):
+    for pa in post_actual:
+        pa1 = pa.R1
+        pa2 = pa.R2
+        pa3 = pa.R3
+    high = 100
+    for p in Post.objects.exclude(name='xyzgo'):
+        r1 = p.R1
+        r2 = p.R2
+        r3 = p.R3
+        new = abs(pa1-r1)+abs(pa2-r2)+abs(pa3-r3)
+        if new < high:
+            high = new
+            id = p.pk
+    return Post.objects.filter(pk=id)
