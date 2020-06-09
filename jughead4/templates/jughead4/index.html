@@ -1,15 +1,28 @@
 
 <!DOCTYPE html>
 {% load static %}
+
 <html>
     <head>
         <title>50/50</title>
         <link rel="stylesheet" href="{% static 'css/jughead4.css' %}">
+        <link rel="stylesheet" href="{% static 'scripts/main.js' %}">
     </head>
 <body>
 <form action="{% url 'jughead4:index' %}" method="post">
 {% csrf_token %}
-
+<script>
+function PlusMinus(r, pm){
+    let t=document.getElementById(r);
+    let v=Number(t.value);
+    //alert((v+pm).toString());
+    t.value = (v+pm).toString();
+}
+function myFunction(){
+    alert('here');
+    PlusMinus('R1', -1);
+}
+</script>
     <h1>50/50</h1>
     <table>
 
@@ -22,6 +35,8 @@
         
         <td>
           <input type="number" id="R1" name="R1" min="0" max="5" value="0">
+          <button type="button" id="B1" name="B1">+</button>
+          <button type="button" onclick="myFunction()" ontouchstart="myFunction()" id="b1" name="b1">-</button>
         </td> 
       </tr> 
       <tr> 
@@ -38,9 +53,11 @@
       </tr> 
     </table>
     <p></p>
+    <!--<script src="scripts/main.js"></script>-->
     Name:<input type="text" id="Name" name="Name">
     <input type="submit" value="Submit">
 
 </form> 
+
 </body>
 </html>

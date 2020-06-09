@@ -7,11 +7,11 @@
     </head>
 <body>
 {% for wp in win_post %}
-<h1>Winner: {{ wp.name }} </h1>
+<h1>Winner: {{ wp.name }} ({{ wp.score }} off)</h1>
     <table>
       <tr> 
         <th>Routine</th> 
-        <th>Winner</th> 
+        <th>{{ wp.name }}</th> 
         <th>You</th> 
         <th>Actual</th> 
       </tr>
