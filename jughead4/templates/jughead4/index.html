@@ -12,18 +12,15 @@
 <form action="{% url 'jughead4:index' %}" method="post">
 {% csrf_token %}
 <script>
-function PlusMinus(r, pm){
-    let t=document.getElementById(r);
+function PlusMinus(ElemID, PlusMinus){
+    let t=document.getElementById(ElemID);
     let v=Number(t.value);
-    //alert((v+pm).toString());
-    t.value = (v+pm).toString();
-}
-function myFunction(){
-    alert('here');
-    PlusMinus('R1', -1);
+    if(v+PlusMinus<6 && v+PlusMinus>-1){
+        t.value = (v+PlusMinus).toString();
+    }
 }
 </script>
-    <h1>50/50</h1>
+    <h1>Bill's Juggling Act</h1>
     <table>
 
       <tr> 
@@ -35,26 +32,30 @@ function myFunction(){
         
         <td>
           <input type="number" id="R1" name="R1" min="0" max="5" value="0">
-          <button type="button" id="B1" name="B1">+</button>
-          <button type="button" onclick="myFunction()" ontouchstart="myFunction()" id="b1" name="b1">-</button>
+          <button type="button" onclick="PlusMinus('R1', 1)" ontouchstart="PlusMinus('R1', 1)" id="B1" name="B1" style="height:40px;width:40px">+</button>
+          <button type="button" onclick="PlusMinus('R1', -1)" ontouchstart="PlusMinus('R1', -1)" id="b1" name="b1" style="height:40px;width:40px">-</button>
         </td> 
       </tr> 
       <tr> 
         <td>3 balls</td> 
         <td>
           <input type="number" id="R2" name="R2" min="0" max="5" value="0">
+          <button type="button" onclick="PlusMinus('R2', 1)" ontouchstart="PlusMinus('R2', 1)" id="B1" name="B1" style="height:40px;width:40px">+</button>
+          <button type="button" onclick="PlusMinus('R2', -1)" ontouchstart="PlusMinus()" id="b1" name="b1" style="height:40px;width:40px">-</button>
         </td> 
       </tr> 
       <tr> 
         <td>3 balls + club</td> 
         <td>
           <input type="number" id="R3" name="R3" min="0" max="5" value="0">
+          <button type="button" onclick="PlusMinus('R3', 1)" ontouchstart="PlusMinus('R2', 1)" id="B1" name="B1" style="height:40px;width:40px">+</button>
+          <button type="button" onclick="PlusMinus('R3', -1)" ontouchstart="PlusMinus('R2', -1)" id="b1" name="b1" style="height:40px;width:40px">-</button>
         </td> 
       </tr> 
     </table>
     <p></p>
     <!--<script src="scripts/main.js"></script>-->
-    Name:<input type="text" id="Name" name="Name">
+    Name: <input type="text" id="Name" name="Name">
     <input type="submit" value="Submit">
 
 </form> 
