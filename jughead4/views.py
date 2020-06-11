@@ -15,7 +15,11 @@ def index(request):
         else:
             post_instance = Post.objects.create(name = request.POST['Name'], 
             R1 = request.POST['R1'], R2 = request.POST['R2'], 
-            R3 = request.POST['R3'])
+            R3 = request.POST['R3'], R4 = request.POST['R4'],
+            R5 = request.POST['R5'], R6 = request.POST['R6'], 
+            R7 = request.POST['R7'], R8 = request.POST['R8'],
+            R9 = request.POST['R9'], R10 = request.POST['R10'], 
+            R11 = request.POST['R11'])
             my_post = Post.objects.filter(pk=post_instance.pk)
             if request.POST['Name'] == 'xyzgo':
                 GetWinners(my_post)
@@ -57,12 +61,28 @@ def GetWinners(post_actual):
         pa1 = pa.R1
         pa2 = pa.R2
         pa3 = pa.R3
+        pa4 = pa.R4
+        pa5 = pa.R5
+        pa6 = pa.R6
+        pa7 = pa.R7
+        pa8 = pa.R8
+        pa9 = pa.R9
+        pa10 = pa.R10
+        pa11 = pa.R11
     high = 100
     for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'):
         r1 = p.R1
         r2 = p.R2
         r3 = p.R3
-        new = abs(pa1-r1)+abs(pa2-r2)+abs(pa3-r3)
+        r4 = p.R4
+        r5 = p.R5
+        r6 = p.R6
+        r7 = p.R7
+        r8 = p.R8
+        r9 = p.R9
+        r10 = p.R10
+        r11 = p.R11
+        new = abs(pa1-r1)+abs(pa2-r2)+abs(pa3-r3)+abs(pa4-r4)+abs(pa5-r5)+abs(pa6-r6)+abs(pa7-r7)+abs(pa8-r8)+abs(pa9-r9)+abs(pa10-r10)+abs(pa11-r11)
         Post.objects.filter(pk=p.pk).update(score=new)
         if new < high:
             high = new
