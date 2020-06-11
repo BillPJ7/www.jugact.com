@@ -7,7 +7,9 @@ def index(request):
     #foo_instance = Foo.objects.create(name='test')
    #return render(request, 'some_name.html.html')
     if request.method == "POST":
-        is_locked = Post.objects.filter(name='xyzlock')
+        is_locked = False
+        if request.POST['Name'] != 'xyzgo':
+            is_locked = Post.objects.filter(name='xyzlock')
         if is_locked:
             return render(request, 'jughead4/nicetry.html')
         else:

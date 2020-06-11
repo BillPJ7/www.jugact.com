@@ -32,8 +32,8 @@ function PlusMinus(ElemID, PlusMinus){
         
         <td>
           <input type="number" id="R1" name="R1" min="0" max="5" value="0">
-          <button type="button" onclick="PlusMinus('R1', 1)" ontouchstart="PlusMinus('R1', 1)" id="B1" name="B1" style="height:40px;width:40px">+</button>
-          <button type="button" onclick="PlusMinus('R1', -1)" ontouchstart="PlusMinus('R1', -1)" id="b1" name="b1" style="height:40px;width:40px">-</button>
+          <button type="button" onclick="PlusMinus('R1', 1)" id="B1" name="B1" style="height:40px;width:40px">+</button>
+          <button type="button" onclick="PlusMinus('R1', -1)" id="b1" name="b1" style="height:40px;width:40px">-</button>
         </td> 
       </tr> 
       <tr> 
@@ -55,7 +55,7 @@ function PlusMinus(ElemID, PlusMinus){
     </table>
     <p></p>
     <!--<script src="scripts/main.js"></script>-->
-    Name: <input type="text" id="Name" name="Name">
+    Name: <input type="text" id="Name" name="Name" required>
     <input type="submit" value="Submit">
 
 </form> 
