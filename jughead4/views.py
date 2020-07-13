@@ -50,6 +50,7 @@ def result(request, post_id):
 def GetWinners(post_actual):
     #loop thru result record and get each routine drops
     for pa in post_actual: 
+        #To do: maybe use an array here so there's just one line.
         pa1 = pa.R1
         pa2 = pa.R2
         pa3 = pa.R3
@@ -64,6 +65,7 @@ def GetWinners(post_actual):
     low = 100 #lowest score is best so start high so first entry will be the new best
     #loop thru the participant records and compare to results
     for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'): #only the participants 
+        #To do: maybe use an array here so there's just one line.
         r1 = p.R1
         r2 = p.R2
         r3 = p.R3
