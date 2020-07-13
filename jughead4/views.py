@@ -4,11 +4,14 @@ from django.urls import reverse
 from .models import Post
 
 def index(request):
-    #foo_instance = Foo.objects.create(name='test')
-   #return render(request, 'some_name.html.html')
-    if request.method == "POST":
+    if request.method == "POST": #Entry already submitted
+        '''
+        If you try to submit after locked, get directed to nicetry.html.
+        Otherwise your entries are posted. If these are the actual results,
+        then do GetWinners. Get directed to confirm.html
+        '''
         is_locked = False
-        if request.POST['Name'] != 'xyzgo':
+        if request.POST['Name'] != 'xyzgo': #only if not submitting result
             is_locked = Post.objects.filter(name='xyzlock')
         if is_locked:
             return render(request, 'jughead4/nicetry.html')
@@ -21,43 +24,32 @@ def index(request):
             R9 = request.POST['R9'], R10 = request.POST['R10'], 
             R11 = request.POST['R11'])
             my_post = Post.objects.filter(pk=post_instance.pk)
-            if request.POST['Name'] == 'xyzgo':
+            if request.POST['Name'] == 'xyzgo': #results being submitted
                 GetWinners(my_post)
             context = {'my_post': my_post}
             return render(request, 'jughead4/confirm.html', context)
-        #my_post = get_object_or_404(Post, pk=post_instance.pk)
-       # post_instance = get_object_or_404(Post, pk=post_instance.pk)
-        #return render(request, 'jughead4/confirm.html', {'post_instance': post_instance})
-    else:
+    else: #Just launched
         return render(request, 'jughead4/index.html')
     
 def result(request, post_id):
-    #if request.method == "POST":
-        post_actual = Post.objects.filter(name='xyzgo')
-        if post_actual:
-            
-            my_post = Post.objects.filter(pk=post_id)
-            win_post = Post.objects.filter(winner=True)
-            #win_post = winner(post_actual)
-           # win_post = Post.objects.filter(pk=i)
-           # return render(request, 'jughead4/result.html', {'my_post': my_post, 'post_actual': post_actual})
-            context = {'my_post': my_post, 'win_post': win_post, 'post_actual': post_actual}
-            return render(request, 'jughead4/result.html', context)
-            #find winner display results
-        else:
-            my_post = Post.objects.filter(pk=post_id)
-            context = {'my_post': my_post}
-            return render(request, 'jughead4/confirm.html', context)
-            #post_instance = get_object_or_404(Post, pk=post_id)
-            #post_instance = Post.objects.filter(id=44)
-            #return HttpResponseRedirect(reverse('jughead4:confirm'))
-            #return render(request, 'jughead4/confirm.html', {'post_instance': post_instance})
-        #context = {'post_actual': post_actual}
-        #return render(request, 'jughead4/')
-    #else:
-        #return render(request, 'jughead4/result.html')
+    '''
+    Result link was clicked on confirm.html. Get directed to result.html,
+    unless results haven't been posted, then get directed back to confirm.html
+    '''
+    post_actual = Post.objects.filter(name='xyzgo')
+    if post_actual: #results were posted
+        my_post = Post.objects.filter(pk=post_id)
+        win_post = Post.objects.filter(winner=True)
+        context = {'my_post': my_post, 'win_post': win_post, 'post_actual': post_actual}
+        return render(request, 'jughead4/result.html', context)
+    else: #no results yet
+        my_post = Post.objects.filter(pk=post_id)
+        context = {'my_post': my_post}
+        return render(request, 'jughead4/confirm.html', context)
+
 def GetWinners(post_actual):
-    for pa in post_actual:
+    #loop thru result record and get each routine drops
+    for pa in post_actual: 
         pa1 = pa.R1
         pa2 = pa.R2
         pa3 = pa.R3
@@ -69,8 +61,9 @@ def GetWinners(post_actual):
         pa9 = pa.R9
         pa10 = pa.R10
         pa11 = pa.R11
-    high = 100
-    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'):
+    low = 100 #lowest score is best so start high so first entry will be the new best
+    #loop thru the participant records and compare to results
+    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'): #only the participants 
         r1 = p.R1
         r2 = p.R2
         r3 = p.R3
@@ -82,12 +75,12 @@ def GetWinners(post_actual):
         r9 = p.R9
         r10 = p.R10
         r11 = p.R11
+        #add up all the differences between guesses and results to determine score (lowest is best)
         new = abs(pa1-r1)+abs(pa2-r2)+abs(pa3-r3)+abs(pa4-r4)+abs(pa5-r5)+abs(pa6-r6)+abs(pa7-r7)+abs(pa8-r8)+abs(pa9-r9)+abs(pa10-r10)+abs(pa11-r11)
         Post.objects.filter(pk=p.pk).update(score=new)
-        if new < high:
-            high = new
-            id = p.pk#Entry.objects.filter(pub_date__year=2010).update(comments_on=False)
-    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'):
-        if p.score == high:
+        if new < low: #check for new low... sorry
+            low = new
+    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'): #only the participants
+        if p.score == low: #we got a winner
             Post.objects.filter(pk=p.pk).update(winner=True)
         
