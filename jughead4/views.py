@@ -29,7 +29,7 @@ def index(request):
             context = {'my_post': my_post}
             return render(request, 'jughead4/confirm.html', context)
     else: #Just launched
-        return render(request, 'jughead4/index.html')
+        return render(request, 'jughead4/index.html') #displays boxes with +, - buttons so you don't have to type numbers
     
 def result(request, post_id):
     '''
@@ -41,11 +41,11 @@ def result(request, post_id):
         my_post = Post.objects.filter(pk=post_id)
         win_post = Post.objects.filter(winner=True)
         context = {'my_post': my_post, 'win_post': win_post, 'post_actual': post_actual}
-        return render(request, 'jughead4/result.html', context)
+        return render(request, 'jughead4/result.html', context) #displays my guesses, winning guesses and actual results
     else: #no results yet
         my_post = Post.objects.filter(pk=post_id)
         context = {'my_post': my_post}
-        return render(request, 'jughead4/confirm.html', context)
+        return render(request, 'jughead4/confirm.html', context) #displays my guesses
 
 def GetWinners(post_actual):
     #loop thru result record and get each routine drops
