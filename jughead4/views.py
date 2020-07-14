@@ -2,7 +2,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from .models import Post
-
+'''
+Attention Azavea people! Before looking at this, take a look
+at the Specs document (my writing sample), which is the specs for this app.
+'''
 def index(request):
     if request.method == "POST": #Entry already submitted
         '''
