@@ -27,7 +27,7 @@ def index(request):
             if request.POST['Name'] == 'xyzgo': #results being submitted
                 GetWinners(my_post)
             context = {'my_post': my_post}
-            return render(request, 'jughead4/confirm.html', context)
+            return render(request, 'jughead4/confirm.html', context) #displays my guesses
     else: #Just launched
         return render(request, 'jughead4/index.html') #displays boxes with +, - buttons so you don't have to type numbers
     
