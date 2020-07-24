@@ -15,7 +15,7 @@ class Post(models.Model):
     R9 = models.IntegerField(default=0)
     R10 = models.IntegerField(default=0)
     R11 = models.IntegerField(default=0)
-
+    
     def publish(self):
         self.save()
 

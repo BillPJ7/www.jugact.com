@@ -6,6 +6,19 @@ from .models import Post
 Attention Azavea people! Before looking at this, take a look
 at the Specs document (my writing sample), which is the specs for this app.
 '''
+routine = []
+routine.append('3 balls + can')
+routine.append('3 balls')
+routine.append('3 balls + club')
+routine.append('4 balls part 1')
+routine.append('4 balls part 2')
+routine.append('5 balls reverse cascade')
+routine.append('5 balls left/right half shower')
+routine.append('5 balls 3 left 2 right, 3 right 2 left')
+routine.append('5 catch 1 on foot (keep 4 going)')
+routine.append('4 balls kick into 5 (stylish kick)')
+routine.append('5 ball shower') 
+ 
 def index(request):
     if request.method == "POST": #Entry already submitted
         '''
@@ -29,10 +42,10 @@ def index(request):
             my_post = Post.objects.filter(pk=post_instance.pk)
             if request.POST['Name'] == 'xyzgo': #results being submitted
                 GetWinners(my_post)
-            context = {'my_post': my_post}
+            context = {'my_post': my_post, "routines":routine}
             return render(request, 'jughead4/confirm.html', context) #displays my guesses
     else: #Just launched
-        return render(request, 'jughead4/index.html') #displays boxes with +, - buttons so you don't have to type numbers
+        return render(request, 'jughead4/index.html', {"routines":routine}) #displays boxes with +, - buttons so you don't have to type numbers
     
 def result(request, post_id):
     '''
