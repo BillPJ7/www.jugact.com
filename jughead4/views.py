@@ -45,15 +45,17 @@ def index(request):
             context = {'my_post': my_post, "routines":routine}
             return render(request, 'jughead4/confirm.html', context) #displays my guesses
     else: #Just launched
-        return render(request, 'jughead4/index.html', {"routines":routine}) #displays boxes with +, - buttons so you don't have to type numbers
+        if Post.objects.filter(name='noact'):
+            return render(request, 'jughead4/noact.html')
+        else:
+            return render(request, 'jughead4/index.html', {"routines":routine}) #displays boxes with +, - buttons so you don't have to type numbers
     
 def result(request, post_id):
     '''
     Result link was clicked on confirm.html. Get directed to result.html,
     unless results haven't been posted, then get directed back to confirm.html
     '''
-    post_actual = Post.objects.filter(name='xyzgo')
-    if post_actual: #results were posted
+    if Post.objects.filter(name='xyzgo'): #results were posted
         my_post = Post.objects.filter(pk=post_id)
         win_post = Post.objects.filter(winner=True)
         context = {'my_post': my_post, 'win_post': win_post, 'post_actual': post_actual}
@@ -80,7 +82,7 @@ def GetWinners(post_actual):
         pa11 = pa.R11
     low = 100 #lowest score is best so start high so first entry will be the new best
     #loop thru the participant records and compare to results
-    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'): #only the participants 
+    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock').exclede(name='noact'): #only the participants 
         #To do: maybe use an array here so there's just one line.
         r1 = p.R1
         r2 = p.R2
@@ -98,7 +100,7 @@ def GetWinners(post_actual):
         Post.objects.filter(pk=p.pk).update(score=new)
         if new < low: #check for new low... sorry
             low = new
-    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock'): #only the participants
+    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock').exclede(name='noact'): #only the participants
         if p.score == low: #we got a winner
             Post.objects.filter(pk=p.pk).update(winner=True)
         
