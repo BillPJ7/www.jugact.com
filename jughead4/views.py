@@ -81,7 +81,7 @@ def GetWinners(post_actual):
         pa9 = pa.R9
         pa10 = pa.R10
         pa11 = pa.R11
-    low = 100 #lowest score is best so start high so first entry will be the new best
+    low = 99 #lowest score is best so start high so first entry will be the new best
     #loop thru the participant records and compare to results
     for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock').exclude(name='noact'): #only the participants 
         #To do: maybe use an array here so there's just one line.
