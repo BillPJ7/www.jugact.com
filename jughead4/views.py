@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+#from django.urls import reverse
 from .models import Post
 '''
 Attention Azavea people! Before looking at this, take a look
@@ -55,13 +55,14 @@ def result(request, post_id):
     Result link was clicked on confirm.html. Get directed to result.html,
     unless results haven't been posted, then get directed back to confirm.html
     '''
+    my_post = Post.objects.filter(pk=post_id)
     if Post.objects.filter(name='xyzgo'): #results were posted
-        my_post = Post.objects.filter(pk=post_id)
+        #my_post = Post.objects.filter(pk=post_id)
         win_post = Post.objects.filter(winner=True)
         context = {'my_post': my_post, 'win_post': win_post, 'post_actual': post_actual}
         return render(request, 'jughead4/result.html', context) #displays my guesses, winning guesses and actual results
     else: #no results yet
-        my_post = Post.objects.filter(pk=post_id)
+        #my_post = Post.objects.filter(pk=post_id)
         context = {'my_post': my_post}
         return render(request, 'jughead4/confirm.html', context) #displays my guesses
 
@@ -82,7 +83,7 @@ def GetWinners(post_actual):
         pa11 = pa.R11
     low = 100 #lowest score is best so start high so first entry will be the new best
     #loop thru the participant records and compare to results
-    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock').exclede(name='noact'): #only the participants 
+    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock').exclude(name='noact'): #only the participants 
         #To do: maybe use an array here so there's just one line.
         r1 = p.R1
         r2 = p.R2
