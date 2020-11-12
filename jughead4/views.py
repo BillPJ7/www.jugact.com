@@ -55,14 +55,14 @@ def result(request, post_id):
     Result link was clicked on confirm.html. Get directed to result.html,
     unless results haven't been posted, then get directed back to confirm.html
     '''
-    my_post = Post.objects.filter(pk=post_id)
-    if Post.objects.filter(name='xyzgo'): #results were posted
-        #my_post = Post.objects.filter(pk=post_id)
+    post_actual = Post.objects.filter(name='xyzgo')
+    if post_actual: #results were posted
+        my_post = Post.objects.filter(pk=post_id)
         win_post = Post.objects.filter(winner=True)
         context = {'my_post': my_post, 'win_post': win_post, 'post_actual': post_actual}
         return render(request, 'jughead4/result.html', context) #displays my guesses, winning guesses and actual results
     else: #no results yet
-        #my_post = Post.objects.filter(pk=post_id)
+        my_post = Post.objects.filter(pk=post_id)
         context = {'my_post': my_post}
         return render(request, 'jughead4/confirm.html', context) #displays my guesses
 
@@ -101,7 +101,7 @@ def GetWinners(post_actual):
         Post.objects.filter(pk=p.pk).update(score=new)
         if new < low: #check for new low... sorry
             low = new
-    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock').exclede(name='noact'): #only the participants
+    for p in Post.objects.exclude(name='xyzgo').exclude(name='xyzlock').exclude(name='noact'): #only the participants
         if p.score == low: #we got a winner
             Post.objects.filter(pk=p.pk).update(winner=True)
         
